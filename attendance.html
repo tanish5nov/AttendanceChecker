@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #212121;
+            color: white;
+            font-size: xx-large;
+        }
+        div{
+            align-items: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="NumberOfPresentDays">Enter The Number Of Days Present: </label>
+        <input type="text" id="NumberOfPresentDays" placeholder="Enter Some Numbers">
+    </div>
+    <div>
+        <label for="TotalDays">Enter Total Days: </label>
+        <input type="text" id="TotalDays" placeholder="Enter Some Numbers">
+    </div>
+    <div>
+        <label for="percentageYouWant">How much percentage attendance You want?</label>
+        <input type="text" id="percentageYouWant" placeholder="Enter Your Desired Percentage">
+    </div>
+    <div>
+        <input type="submit" value="Calculate" id="Calculate" >
+    </div>
+    <div id="finalResult">
+        No Inputs Made Yet!
+    </div>
+</body>
+<script>
+    document.getElementById('Calculate').onclick = ()=>{
+        let presentClasses = parseFloat(document.getElementById('NumberOfPresentDays').value);
+        let totalClasses = parseFloat(document.getElementById('TotalDays').value);
+        let requiredPercentage = parseFloat(document.getElementById('percentageYouWant').value);
+        let percentage = (presentClasses/totalClasses)*100;
+        if(!presentClasses || !totalClasses){
+            document.getElementById('finalResult').innerText = `Give Some Inputs Bro!`;
+            return;
+        }
+        if(percentage>=requiredPercentage){
+            let ClassesYouCanLeave = 0;
+            for(let classCount=0; classCount<=150; classCount++){
+                let currentNumerator = presentClasses;
+                let currentDenominator = totalClasses+classCount;
+                percentage = (currentNumerator/currentDenominator)*100;
+                if(percentage >= requiredPercentage){
+                    ClassesYouCanLeave = classCount;
+                }else{
+                    break;
+                }
+            }
+            if(ClassesYouCanLeave===0){
+                document.getElementById('finalResult').innerText = `Don't Leave Any class Now`;
+            }else{
+                document.getElementById('finalResult').innerText = `You are already fulfilling ${requiredPercentage}% Criteria. You Can Leave ${ClassesYouCanLeave} Classes`;
+            }
+        }else{
+            let requiredClasses = -1;
+            for(let classCount=0; classCount<=150; classCount++){
+                let currentNumerator = presentClasses+classCount;
+                let currentDenominator = totalClasses+classCount;
+                percentage = (currentNumerator/currentDenominator)*100;
+                if(percentage >= requiredPercentage){
+                    requiredClasses = classCount;
+                    break;
+                }
+            }
+            if(requiredClasses===0){
+                document.getElementById('finalResult').innerText = `You are already fulfilling ${requiredPercentage}% Criteria`;
+            }else if(requiredClasses===-1){
+                document.getElementById('finalResult').innerText = `Only God Can Save You From Getting Detained`;
+            }else{
+                document.getElementById('finalResult').innerText = `You Need ${requiredClasses} present`;
+            }
+        }
+    };
+</script>
+</html>
