@@ -6,7 +6,7 @@
     <title>Document</title>
     <style>
         body{
-            background-color: #D3D9D4;
+            background-color: white;
             color: black;
             font-size: xx-large;
         }
@@ -39,11 +39,23 @@
     <div>
         <input type="submit" value="Calculate" id="Calculate" >
     </div>
+    <input type="button" value="Switch Color mode" id="switch">
     <div id="finalResult">
         No Inputs Made Yet!
     </div>
 </body>
 <script>
+    document.getElementById('switch').onclick = ()=>{
+        const currentMode = document.body.style.backgroundColor;
+        if(currentMode==='black'){
+            document.body.style.backgroundColor = 'white';
+            document.body.style.color = 'black';
+        }else{
+            document.body.style.backgroundColor = 'black';
+            document.body.style.color = 'white';
+        }
+        console.log(currentMode);
+    }
     document.getElementById('Calculate').onclick = ()=>{
         let presentClasses = parseFloat(document.getElementById('NumberOfPresentDays').value);
         let totalClasses = parseFloat(document.getElementById('TotalDays').value);
